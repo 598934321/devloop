@@ -1,0 +1,20 @@
+{
+  "name": "devloop",
+  "version": "1.0.0",
+  "description": "First-principles iterative development loop: build -> commit -> deploy (staging/local only, never production) -> adversarial black-box subagent review -> repeat until 100% -> cleanup and report.",
+  "author": {
+    "name": "hyy"
+  },
+  "homepage": "https://github.com/598934321/devloop",
+  "repository": "https://github.com/598934321/devloop",
+  "license": "MIT",
+  "keywords": [
+    "iterative-development",
+    "adversarial-review",
+    "subagent",
+    "black-box-testing",
+    "staging",
+    "workflow",
+    "skills"
+  ]
+}
