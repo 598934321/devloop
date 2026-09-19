@@ -30,31 +30,21 @@ Instead of write-code-and-hope, devloop runs a closed loop. Your agent restates 
 
 ## Install
 
-### Devin CLI / Devin Desktop (plugin)
+The repo is a plugin for every agent that supports plugin manifests — and `skills/devloop/` is an ordinary skill directory you can copy anywhere.
 
-```bash
-devin plugins install 598934321/devloop
-```
+| Agent | Install | Invoke |
+|-------|---------|--------|
+| **Devin CLI / Desktop** | `devin plugins install 598934321/devloop` | `/devloop:devloop` |
+| **Devin CLI / Desktop** (bare) | `cp -r skills/devloop ~/.config/devin/skills/` | `/devloop` |
+| **Claude Code** | `cp -r skills/devloop ~/.claude/skills/` | `/devloop` |
+| **Codex** | `cp -r skills/devloop ~/.codex/skills/` | `/devloop` |
+| **Cursor** | `cp -r skills/devloop ~/.cursor/skills/` | `/devloop` |
+| **Kimi Code** | plugin manifest `.kimi-plugin/` (ships tool-name mapping) | `/devloop` |
+| **Gemini CLI** | `gemini extensions install https://github.com/598934321/devloop` | `/devloop` |
+| **agentskills-compatible** | `cp -r skills/devloop .agents/skills/` (project) or `~/.agents/skills/` (global) | `/devloop` |
+| **Any other agent** | copy `skills/devloop/` into that agent's skills directory | `/devloop` |
 
-Skills are namespaced by plugin, so invoke as `/devloop:devloop`.
-
-### Devin CLI / Devin Desktop (bare skill)
-
-```bash
-mkdir -p ~/.config/devin/skills
-cp -r skills/devloop ~/.config/devin/skills/
-```
-
-Invoke as `/devloop`.
-
-### Claude Code
-
-```bash
-mkdir -p ~/.claude/skills
-cp -r skills/devloop ~/.claude/skills/
-```
-
-Invoke as `/devloop`.
+Tool references inside `SKILL.md` are harness-neutral (subagent / task-list / question tools); per-agent manifests carry `skillInstructions` mappings where the format supports them.
 
 ## Usage
 
@@ -75,11 +65,17 @@ The skill iterates autonomously until the adversarial review scores 100%, or sto
 
 ```
 devloop/
-├── .devin-plugin/plugin.json    # Devin plugin manifest
-├── .claude-plugin/plugin.json   # Claude Code plugin manifest
+├── .devin-plugin/plugin.json      # Devin plugin manifest
+├── .claude-plugin/plugin.json     # Claude Code plugin manifest
+├── .codex-plugin/plugin.json      # Codex plugin manifest
+├── .cursor-plugin/plugin.json     # Cursor plugin manifest
+├── .kimi-plugin/plugin.json       # Kimi Code manifest (tool-name mapping)
+├── .agents/plugins/marketplace.json  # agentskills marketplace
+├── gemini-extension.json          # Gemini CLI extension
+├── GEMINI.md                      # context for Gemini CLI
 ├── skills/
 │   └── devloop/
-│       └── SKILL.md             # the skill itself
+│       └── SKILL.md               # the skill itself (agent-neutral)
 ├── README.md / README.zh-CN.md
 └── LICENSE
 ```

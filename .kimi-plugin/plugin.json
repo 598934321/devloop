@@ -1,0 +1,33 @@
+{
+  "name": "devloop",
+  "version": "1.0.0",
+  "description": "First-principles iterative development loop: build -> commit -> deploy (staging/local only, never production) -> adversarial black-box subagent review -> repeat until 100% -> cleanup and report.",
+  "author": {
+    "name": "hyy"
+  },
+  "homepage": "https://github.com/598934321/devloop",
+  "license": "MIT",
+  "keywords": [
+    "iterative-development",
+    "adversarial-review",
+    "subagent",
+    "black-box-testing",
+    "staging",
+    "workflow",
+    "skills"
+  ],
+  "skills": "./skills/",
+  "skillInstructions": "devloop tool mapping for Kimi Code:\n\n- When the skill says to ask the user or present multiple-choice options, call Kimi Code's `AskUserQuestion` tool with 1 question and 2-4 concrete options, recommended option first suffixed with `(Recommended)`.\n- When the skill says to maintain a task list (`todo_write` / `TaskCreate` / `TodoWrite`), use Kimi Code's `TodoList` tool.\n- When the skill says to spawn a review subagent (`run_subagent` / `Task tool` / `subagent_general` / `general-purpose`), use Kimi Code's `Agent` tool with `subagent_type: \"coder\"`: paste the fully filled review prompt into `prompt`, provide a short `description`, and wait for the report before continuing (do not run it in background).\n- Use Kimi Code's `Read`, `Write`, `Edit`, `Bash`, `Grep`, `Glob`, `FetchURL`, `WebSearch` tools by their actual exposed names for file search, content search, URL fetch, and web search.",
+  "interface": {
+    "displayName": "devloop",
+    "shortDescription": "Iterative dev loop with adversarial subagent review, until 100%",
+    "longDescription": "First-principles build, commit, deploy to staging or local (never production), adversarial black-box review by a subagent, iterate until the review scores 100%, then clean up and report an iteration table.",
+    "developerName": "hyy",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/598934321/devloop"
+  }
+}

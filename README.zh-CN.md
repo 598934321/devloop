@@ -25,31 +25,21 @@ devloop 不是写完就完，而是一个闭环：Agent 先用第一性原理复
 
 ## 安装
 
-### Devin CLI / Devin Desktop（插件方式）
+本仓库对每个支持插件清单的 agent 都是插件；`skills/devloop/` 也是普通 skill 目录，拷到任意 agent 的 skills 目录即可用。
 
-```bash
-devin plugins install 598934321/devloop
-```
+| Agent | 安装 | 调用 |
+|-------|------|------|
+| **Devin CLI / Desktop** | `devin plugins install 598934321/devloop` | `/devloop:devloop` |
+| **Devin CLI / Desktop**（裸装） | `cp -r skills/devloop ~/.config/devin/skills/` | `/devloop` |
+| **Claude Code** | `cp -r skills/devloop ~/.claude/skills/` | `/devloop` |
+| **Codex** | `cp -r skills/devloop ~/.codex/skills/` | `/devloop` |
+| **Cursor** | `cp -r skills/devloop ~/.cursor/skills/` | `/devloop` |
+| **Kimi Code** | 插件清单 `.kimi-plugin/`（内置工具名映射） | `/devloop` |
+| **Gemini CLI** | `gemini extensions install https://github.com/598934321/devloop` | `/devloop` |
+| **agentskills 兼容** | `cp -r skills/devloop .agents/skills/`（项目）或 `~/.agents/skills/`（全局） | `/devloop` |
+| **其他 agent** | 把 `skills/devloop/` 拷进该 agent 的 skills 目录 | `/devloop` |
 
-插件内 skill 带命名空间，调用为 `/devloop:devloop`。
-
-### Devin CLI / Devin Desktop（裸 skill）
-
-```bash
-mkdir -p ~/.config/devin/skills
-cp -r skills/devloop ~/.config/devin/skills/
-```
-
-调用为 `/devloop`。
-
-### Claude Code
-
-```bash
-mkdir -p ~/.claude/skills
-cp -r skills/devloop ~/.claude/skills/
-```
-
-调用为 `/devloop`。
+`SKILL.md` 内的工具引用是 harness 中立的（子代理 / 任务清单 / 提问工具）；各 agent manifest 在格式支持时附带 `skillInstructions` 做工具名映射。
 
 ## 使用
 
@@ -70,11 +60,17 @@ Skill 启动后自主迭代，直到对抗审查达到 100%，或遇到需要你
 
 ```
 devloop/
-├── .devin-plugin/plugin.json    # Devin 插件清单
-├── .claude-plugin/plugin.json   # Claude Code 插件清单
+├── .devin-plugin/plugin.json      # Devin 插件清单
+├── .claude-plugin/plugin.json     # Claude Code 插件清单
+├── .codex-plugin/plugin.json      # Codex 插件清单
+├── .cursor-plugin/plugin.json     # Cursor 插件清单
+├── .kimi-plugin/plugin.json       # Kimi Code 清单（工具名映射）
+├── .agents/plugins/marketplace.json  # agentskills 市场清单
+├── gemini-extension.json          # Gemini CLI 扩展
+├── GEMINI.md                      # Gemini CLI 上下文
 ├── skills/
 │   └── devloop/
-│       └── SKILL.md             # skill 本体
+│       └── SKILL.md               # skill 本体（agent 中立）
 ├── README.md / README.zh-CN.md
 └── LICENSE
 ```

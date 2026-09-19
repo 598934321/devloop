@@ -31,7 +31,7 @@ permissions:
 
 1. 用第一性原理复述需求：要解决的**本质问题**是什么、输入/输出、成功判据、边界条件、必须成立的不变量。不接受表象描述，追问到不可再分。
 2. 需求有歧义或存在多种合理解法 → 先问用户，再动手。
-3. 用 todo_write 建立任务清单（开发 / 验证 / 部署 / 审查 / 各轮修复）。
+3. 用你所在 agent 的任务清单工具建立任务清单（Devin: `todo_write`；Claude Code: `TaskCreate`/`TodoWrite`；其他: 等价物），覆盖开发 / 验证 / 部署 / 审查 / 各轮修复。
 
 ## 步骤 1：第一性原理开发（每轮迭代入口）
 
@@ -53,7 +53,14 @@ permissions:
 
 ## 步骤 3：子代理黑盒对抗性审查
 
-用 `run_subagent` 启动**前台**子代理（`profile: subagent_general`，需要 exec 做实际探测），等报告返回后再继续。子代理无状态、看不到本会话，任务里必须注入完整上下文：
+用你所在 agent 的子代理机制启动**前台**审查子代理（等报告返回后再继续），要求它能跑 shell 命令做实际探测：
+
+- Devin：`run_subagent`，`profile: subagent_general`
+- Claude Code：`Task` 工具，`subagent_type: general-purpose`
+- Kimi Code：`Agent` 工具，`subagent_type: "coder"`
+- 其他 agent：等价的通用子代理机制；若无子代理能力，退化为主会话自查——但要显式切换"对抗审查员"视角并注明该降级
+
+子代理无状态、看不到本会话，任务里必须注入完整上下文：
 
 ```
 角色：黑盒对抗审查员。把本次实现当作不可信交付物，目标是找出问题，不是确认正确。

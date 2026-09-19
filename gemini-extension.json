@@ -1,0 +1,6 @@
+{
+  "name": "devloop",
+  "description": "First-principles iterative development loop: build -> commit -> deploy (staging/local only, never production) -> adversarial black-box subagent review -> repeat until 100% -> cleanup and report.",
+  "version": "1.0.0",
+  "contextFileName": "GEMINI.md"
+}
