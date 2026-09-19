@@ -46,6 +46,10 @@ The repo is a plugin for every agent that supports plugin manifests — and `ski
 
 Tool references inside `SKILL.md` are harness-neutral (subagent / task-list / question tools); per-agent manifests carry `skillInstructions` mappings where the format supports them.
 
+Two skill variants ship side by side — `skills/devloop/` (简体中文, `/devloop`) and `skills/devloop-en/` (English, `/devloop-en`); pick one.
+
+CI (`scripts/validate.mjs` + GitHub Action) checks every manifest parses, `version` is semver, declared skills dirs exist, and each `SKILL.md` frontmatter `name`/`description` matches its directory.
+
 ## Usage
 
 ```
@@ -74,8 +78,10 @@ devloop/
 ├── gemini-extension.json          # Gemini CLI extension
 ├── GEMINI.md                      # context for Gemini CLI
 ├── skills/
-│   └── devloop/
-│       └── SKILL.md               # the skill itself (agent-neutral)
+│   ├── devloop/SKILL.md           # the skill itself — 简体中文 (agent-neutral)
+│   └── devloop-en/SKILL.md        # English variant
+├── scripts/validate.mjs           # structural validation
+├── .github/workflows/validate.yml # CI
 ├── README.md / README.zh-CN.md
 └── LICENSE
 ```

@@ -41,6 +41,10 @@ devloop 不是写完就完，而是一个闭环：Agent 先用第一性原理复
 
 `SKILL.md` 内的工具引用是 harness 中立的（子代理 / 任务清单 / 提问工具）；各 agent manifest 在格式支持时附带 `skillInstructions` 做工具名映射。
 
+两个 skill 变体并存——`skills/devloop/`（简体中文，`/devloop`）与 `skills/devloop-en/`（English，`/devloop-en`），按需取一。
+
+CI（`scripts/validate.mjs` + GitHub Action）校验所有 manifest 可解析、`version` 为 semver、声明的 skills 目录存在、每个 `SKILL.md` frontmatter 的 `name`/`description` 与目录一致。
+
 ## 使用
 
 ```
@@ -69,8 +73,10 @@ devloop/
 ├── gemini-extension.json          # Gemini CLI 扩展
 ├── GEMINI.md                      # Gemini CLI 上下文
 ├── skills/
-│   └── devloop/
-│       └── SKILL.md               # skill 本体（agent 中立）
+│   ├── devloop/SKILL.md           # skill 本体——简体中文（agent 中立）
+│   └── devloop-en/SKILL.md        # English variant
+├── scripts/validate.mjs           # 结构校验
+├── .github/workflows/validate.yml # CI
 ├── README.md / README.zh-CN.md
 └── LICENSE
 ```
